@@ -389,6 +389,7 @@ def create_casilla():
     idImagen = data['idImagen']
     coordenadaX = data['coordenadaX']
     coordenadaY = data['coordenadaY']
+    estado = data['estado']
     idPregunta = data['idPregunta']
     # Check if the image exists using the helper function
     imagen = fetch_one_imagen(idImagen)
@@ -402,8 +403,8 @@ def create_casilla():
         else:
             conn = get_connection()
             cursor = conn.cursor()
-            cursor.execute('INSERT INTO Casilla (idImagen, coordenadaX, coordenadaY, idPregunta) VALUES (%s, %s, %s, %s)',
-                           (idImagen, coordenadaX, coordenadaY, idPregunta))
+            cursor.execute('INSERT INTO Casilla (idImagen, coordenadaX, coordenadaY, estado, idPregunta) VALUES (%s, %s, %s, %s, %s)',
+                           (idImagen, coordenadaX, coordenadaY, estado, idPregunta))
             conn.commit()
             conn.close()
             return jsonify({'mensaje': 'Casilla creada'}), 201
@@ -415,6 +416,7 @@ def update_casilla(id):
     idImagen = data['idImagen']
     coordenadaX = data['coordenadaX']
     coordenadaY = data['coordenadaY']
+    estado = data['estado']
     idPregunta = data['idPregunta']
     # Check if the image exists using the helper function
     imagen = fetch_one_imagen(idImagen)
@@ -428,8 +430,8 @@ def update_casilla(id):
         else:
             conn = get_connection()
             cursor = conn.cursor()
-            cursor.execute('UPDATE Casilla SET idImagen = %s, coordenadaX = %s, coordenadaY = %s, idPregunta = %s WHERE idCasilla = %s',
-                           (idImagen, coordenadaX, coordenadaY, idPregunta, id))
+            cursor.execute('UPDATE Casilla SET idImagen = %s, coordenadaX = %s, coordenadaY = %s, estado = %s, idPregunta = %s WHERE idCasilla = %s',
+                           (idImagen, coordenadaX, coordenadaY, estado, idPregunta, id))
             conn.commit()
             conn.close()
             return jsonify({'mensaje': 'Casilla actualizada'})
