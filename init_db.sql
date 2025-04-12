@@ -31,7 +31,6 @@ CREATE TABLE Casilla (
   idImagen INT NOT NULL,
   coordenadaX INT NOT NULL,
   coordenadaY INT NOT NULL,
-  casilla BIT NOT NULL,
   idPregunta INT NOT NULL,
   PRIMARY KEY (idCasilla, idImagen) -- Clave primaria compuesta
 );
@@ -116,8 +115,8 @@ INSERT INTO Boleto (tipo, idUsuario) VALUES
 INSERT INTO Pregunta (pregunta, opcionA, opcionB, opcionC, opcionD, respuesta) VALUES
 ('hola', 'e', 'r', 'v', 's', 'opcionA');
 
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, estado, idPregunta) VALUES
-(1, 1, 23, 43,0, 1);
+INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
+(1, 1, 23, 43, 1);
 
 INSERT INTO IntentoCorrecto (idUsuario, idCasilla, idImagen) VALUES
 (1, 1, 1);
