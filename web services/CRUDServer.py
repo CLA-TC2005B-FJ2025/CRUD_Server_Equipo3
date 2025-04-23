@@ -68,11 +68,27 @@ def fetch_one_casilla(id):
 
 def fetch_one_pregunta(id):
     conn = get_connection()
-    cursor = conn.cursor(as_dict=True)
+    cursor = conn.cursor()
     cursor.execute('SELECT * FROM Pregunta WHERE idPregunta = %s', (id,))
-    data = cursor.fetchone()
+    row = cursor.fetchone()
     conn.close()
-    return data
+
+    if not row:
+        return None
+
+    return {
+        'idPregunta': row[0],
+        'pregunta': row[1],
+        'options': [
+            {'option': 'A', 'text': row[2]},
+            {'option': 'B', 'text': row[3]},
+            {'option': 'C', 'text': row[4]},
+            {'option': 'D', 'text': row[5]},
+        ],
+        # Si 'respuesta' es 'opcionD', se extrae 'D'
+        'correctOption': row[6][-1],
+        'timer': '00:30'
+    }
 
 
 def fetch_one_intento_correcto(id):
