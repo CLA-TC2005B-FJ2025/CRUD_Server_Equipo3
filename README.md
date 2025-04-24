@@ -27,11 +27,14 @@ sudo apt install mssql-tools unixodbc-dev
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
 ```
-### Usar sqlcmd para inicializar la base de datos con las tablas y datos desde la terminal.
+### Usar sqlcmd para inicializar la base de datos con las tablas desde la terminal.
 ```sh
 sqlcmd -S localhost -U sa -P YourPassword123! -i init_db.sql
 ```
-
+### Para insertar datos a la base.
+```sh
+sqlcmd -S localhost -U sa -P YourPassword123! -i datos.sql
+```
 # Probar servicios web
 
 ## Prerequisitos
