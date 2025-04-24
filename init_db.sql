@@ -98,29 +98,3 @@ ALTER TABLE IntentoIncorrecto ADD FOREIGN KEY (idCasilla, idImagen) REFERENCES C
 ALTER TABLE Imagen ADD FOREIGN KEY (idEvento) REFERENCES Evento (idEvento);
 ALTER TABLE Imagen ADD FOREIGN KEY (idUsuario) REFERENCES Usuario (idUsuario);
 
-
---Datos dummy
-INSERT INTO Evento (fechaInicio, fechaFinal) VALUES
-('2006-05-08 03:05:15', '2006-05-08 03:05:15');
-
-INSERT INTO Imagen (URL, estado, respuesta, idEvento, idUsuario) VALUES
-('jsfhsrhfkjdhfkjhdkj', 0, 'jshfu', 1, NULL);
-
-INSERT INTO Usuario (usuario, idEvento) VALUES
-('valeria', 1);
-
-INSERT INTO Boleto (tipo, idUsuario) VALUES
-(0, 1);
-
-INSERT INTO Pregunta (pregunta, opcionA, opcionB, opcionC, opcionD, respuesta) VALUES
-('hola', 'e', 'r', 'v', 's', 'opcionA');
-
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(1, 1, 23, 43, 1);
-
-INSERT INTO IntentoCorrecto (idUsuario, idCasilla, idImagen) VALUES
-(1, 1, 1);
-
-INSERT INTO IntentoIncorrecto (opcionElegida, idUsuario, idCasilla, idImagen) VALUES
-('opcionB', 1, 1, 1);
-
