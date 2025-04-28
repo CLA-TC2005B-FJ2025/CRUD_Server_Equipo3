@@ -1,29 +1,29 @@
 --Datos dummy
 INSERT INTO Evento (fechaInicio, fechaFinal) VALUES
-('2006-05-08 03:05:15', '2006-05-08 03:05:15');
+('2025-04-20 03:05:15', '2026-04-20 03:05:15');
 
 INSERT INTO Imagen (URL, estado, respuesta, idEvento, idUsuario) VALUES
 ('jsfhsrhfkjdhfkjhdkj', 0, 'jshfu', 1, NULL);
 
-INSERT INTO Usuario (usuario, idEvento) VALUES
-('valeria', 1);
+INSERT INTO Usuario (usuario, idEvento, contacto) VALUES
+('valeria', 1, 'valeria@email.com');
 
 -- Paso 2: Obtener el último id generado
 -- (Si estás usando SQL Server)
 DECLARE @idUsuario INT = SCOPE_IDENTITY();
 
 -- Paso 3: Insertar en UsuarioNormal usando ese id
-INSERT INTO UsuarioNormal (idUsuario, correo, contrasena) 
-VALUES (@idUsuario, 'valeria@email.com', '6b3799be4300e44489a08090123f3842e6419da5');
+INSERT INTO UsuarioNormal (idUsuario, contrasena) 
+VALUES (@idUsuario, '6b3799be4300e44489a08090123f3842e6419da5');
 
 -- Insertar a Andrés como UsuarioRed
-INSERT INTO Usuario (usuario, idEvento) VALUES ('andres', 1);
+INSERT INTO Usuario (usuario, idEvento, contacto) VALUES ('andres', 1, 'Google');
 
 DECLARE @idUsuarioRed INT = SCOPE_IDENTITY();
 
 -- Paso 3: Insertar en UsuarioRed
-INSERT INTO UsuarioRed (idUsuario, redSocial) 
-VALUES (@idUsuarioRed, 'Google');
+INSERT INTO UsuarioRed (idUsuario) 
+VALUES (@idUsuarioRed);
 
 INSERT INTO Boleto (tipo, idUsuario) VALUES
 (0, 1);

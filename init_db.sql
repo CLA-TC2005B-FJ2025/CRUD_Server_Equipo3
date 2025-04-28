@@ -15,13 +15,14 @@ DROP TABLE IF EXISTS Pregunta;
 CREATE TABLE Usuario (
   idUsuario INT IDENTITY(1,1) PRIMARY KEY,
   usuario VARCHAR(50) NOT NULL,
-  idEvento INT NOT NULL
+  idEvento INT NOT NULL,
+  contacto VARCHAR(100) NOT NULL -- Aquí guardamos el correo o red social
 );
+
 
 -- Tabla derivada: UsuarioNormal
 CREATE TABLE UsuarioNormal (
   idUsuario INT PRIMARY KEY,
-  correo VARCHAR(100) NOT NULL,
   contrasena VARCHAR(100) NOT NULL,
   FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
@@ -29,7 +30,6 @@ CREATE TABLE UsuarioNormal (
 -- Tabla derivada: UsuarioRed
 CREATE TABLE UsuarioRed (
   idUsuario INT PRIMARY KEY,
-  redSocial VARCHAR(50) NOT NULL, -- Google, Facebook, etc.
   FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
 

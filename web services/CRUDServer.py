@@ -71,7 +71,6 @@ def login():
         return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
 
 
-
 # Metodos para fetch y manejo de errores
 
 def fetch_one_usuario(id):
@@ -82,9 +81,8 @@ def fetch_one_usuario(id):
           u.idUsuario, 
           u.usuario, 
           u.idEvento,
-          un.correo,
+          u.contacto,  -- Aquí puede ser correo o nombre de red social
           un.contrasena,
-          ur.redSocial,
           CASE 
             WHEN un.idUsuario IS NOT NULL THEN 'Normal'
             WHEN ur.idUsuario IS NOT NULL THEN 'Red'
@@ -193,9 +191,8 @@ def get_usuarios():
               u.idUsuario, 
               u.usuario, 
               u.idEvento,
-              un.correo,
+              u.contacto,  -- Puede ser correo o nombre de la red social
               un.contrasena,
-              ur.redSocial,
               CASE 
                 WHEN un.idUsuario IS NOT NULL THEN 'Normal'
                 WHEN ur.idUsuario IS NOT NULL THEN 'Red'
@@ -217,16 +214,32 @@ def get_usuarios():
 def get_usuarios_red():
     conn = get_connection()
     cursor = conn.cursor(as_dict=True)
-    cursor.execute('SELECT * FROM UsuarioRed')
+    cursor.execute('''
+        SELECT 
+          u.idUsuario, 
+          u.usuario, 
+          u.contacto,  -- contacto contiene el nombre de la red social
+        FROM Usuario u
+        INNER JOIN UsuarioRed ur ON u.idUsuario = ur.idUsuario
+    ''')
     data = cursor.fetchall()
     conn.close()
     return jsonify(data)
+
 
 @app.route('/usuarionormal', methods=['GET'])
 def get_usuarios_normal():
     conn = get_connection()
     cursor = conn.cursor(as_dict=True)
-    cursor.execute('SELECT * FROM UsuarioNormal')
+    cursor.execute('''
+        SELECT 
+          u.idUsuario, 
+          u.usuario, 
+          u.contacto AS correo,  -- contacto ahora guarda el correo para normales
+          un.contrasena
+        FROM Usuario u
+        INNER JOIN UsuarioNormal un ON u.idUsuario = un.idUsuario
+    ''')
     data = cursor.fetchall()
     conn.close()
     return jsonify(data)
@@ -241,52 +254,107 @@ def get_one_usuario(id):
         return jsonify({'mensaje': 'Usuario no encontrado'}), 404
 
 
-
-
-@app.route('/usuario', methods=['POST'])
-def create_usuario():
+@app.route('/usuarionormal', methods=['POST'])
+def create_usuario_normal():
     data = request.json
     usuario = data['usuario']
-    idEvento = data['idEvento']
-    tipo = data['tipoUsuario']  # 'Normal' o 'Red'
+    correo = data['correo']
+    contrasena = data['contrasena']
 
-    # Validar evento
-    evento = fetch_one_evento(idEvento)
-    if not evento:
-        return jsonify({'mensaje': 'El evento especificado no existe'}), 400
+    conn = get_connection()
+    cursor = conn.cursor(as_dict=True)
 
     try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute(
-            'INSERT INTO Usuario (usuario, idEvento) VALUES (%s, %s)', (usuario, idEvento))
+        # Buscar evento en curso automáticamente
+        cursor.execute('''
+            SELECT TOP 1 idEvento 
+            FROM Evento 
+            WHERE fechaInicio <= GETDATE() AND fechaFinal >= GETDATE()
+            ORDER BY fechaInicio DESC
+        ''')
+        evento = cursor.fetchone()
+
+        if not evento:
+            return jsonify({'error': 'No hay evento en curso'}), 400
+
+        idEvento = evento['idEvento']
+
+        # Insertar en Usuario con el correo como contacto
+        cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
         conn.commit()
 
-        # Obtener id generado
-        cursor.execute('SELECT SCOPE_IDENTITY()')
-        idUsuario = cursor.fetchone()[0]
+        cursor.execute('SELECT SCOPE_IDENTITY() as idUsuario')
+        idUsuario = cursor.fetchone()['idUsuario']
 
-        if tipo == 'Normal':
-            correo = data['correo']
-            contrasena = data['contrasena']
-            cursor.execute('INSERT INTO UsuarioNormal (idUsuario, correo, contrasena) VALUES (%s, %s, %s)',
-                           (idUsuario, correo, contrasena))
-        elif tipo == 'Red':
-            redSocial = data['redSocial']
-            cursor.execute('INSERT INTO UsuarioRed (idUsuario, redSocial) VALUES (%s, %s)',
-                           (idUsuario, redSocial))
-        else:
-            conn.rollback()
-            return jsonify({'mensaje': 'Tipo de usuario inválido'}), 400
-
+        # Insertar en UsuarioNormal (solo contrasena ahora)
+        cursor.execute('INSERT INTO UsuarioNormal (idUsuario, contrasena) VALUES (%s, %s)',
+                       (idUsuario, contrasena))
         conn.commit()
-        return jsonify({'mensaje': 'Usuario creado', 'idUsuario': idUsuario}), 201
+
+        return jsonify({'mensaje': 'Usuario normal creado', 'idUsuario': idUsuario}), 201
 
     except Exception as e:
         conn.rollback()
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
+
+
+
+@app.route('/usuariored', methods=['POST'])
+def create_usuario_red():
+    data = request.json
+    nombre = data['usuario']
+    contacto = data['contacto']
+
+    conn = get_connection()
+    cursor = conn.cursor(as_dict=True)
+
+    try:
+        # Buscar el evento en curso
+        cursor.execute('''
+            SELECT TOP 1 idEvento 
+            FROM Evento 
+            WHERE fechaInicio <= GETDATE() AND fechaFinal >= GETDATE()
+            ORDER BY fechaInicio DESC
+        ''')
+        evento = cursor.fetchone()
+
+        if not evento:
+            return jsonify({'error': 'No hay evento en curso'}), 400
+
+        idEvento = evento['idEvento']
+
+        # Verificar si el usuario ya existe
+        cursor.execute('SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
+        existing = cursor.fetchone()
+
+        if existing:
+            idUsuario = existing['idUsuario']
+            mensaje = 'Usuario ya existe'
+        else:
+            # Insertar en Usuario con contacto = nombre de red social
+            cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
+            conn.commit()
+
+            cursor.execute('SELECT SCOPE_IDENTITY() AS idUsuario')
+            idUsuario = cursor.fetchone()['idUsuario']
+
+            # Insertar en UsuarioRed (solo tokenRed si se envía)
+            cursor.execute('INSERT INTO UsuarioRed (idUsuario) VALUES (%s)',
+                           (idUsuario))
+            conn.commit()
+
+            mensaje = 'Usuario red creado'
+
+        return jsonify({'mensaje': mensaje, 'idUsuario': idUsuario}), 201
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
 
 
 
@@ -311,34 +379,39 @@ def update_usuario(id):
         conn = get_connection()
         cursor = conn.cursor()
 
-        # Actualizar tabla Usuario
-        cursor.execute('UPDATE Usuario SET usuario = %s, idEvento = %s WHERE idUsuario = %s', (usuario, idEvento, id))
-
         if tipo == 'Normal':
-            correo = data['correo']
+            correo = data['contacto']
             contrasena = data['contrasena']
+
+            # Actualizar Usuario con contacto = correo
+            cursor.execute('UPDATE Usuario SET usuario = %s, idEvento = %s, contacto = %s WHERE idUsuario = %s',
+                           (usuario, idEvento, correo, id))
 
             # Ver si ya existía en UsuarioNormal
             cursor.execute('SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
             if cursor.fetchone():
-                cursor.execute('UPDATE UsuarioNormal SET correo = %s, contrasena = %s WHERE idUsuario = %s',
-                               (correo, contrasena, id))
+                cursor.execute('UPDATE UsuarioNormal SET contrasena = %s WHERE idUsuario = %s',
+                               (contrasena, id))
             else:
-                cursor.execute('INSERT INTO UsuarioNormal (idUsuario, correo, contrasena) VALUES (%s, %s, %s)',
-                               (id, correo, contrasena))
+                cursor.execute('INSERT INTO UsuarioNormal (idUsuario, contrasena) VALUES (%s, %s)',
+                               (id, contrasena))
+
             # Asegurarse que no exista en UsuarioRed
             cursor.execute('DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
 
         elif tipo == 'Red':
-            redSocial = data['redSocial']
+            redSocial = data['contacto']
 
+            # Actualizar Usuario con contacto = redSocial
+            cursor.execute('UPDATE Usuario SET usuario = %s, idEvento = %s, contacto = %s WHERE idUsuario = %s',
+                           (usuario, idEvento, redSocial, id))
+
+            # Ver si ya existía en UsuarioRed
             cursor.execute('SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
-            if cursor.fetchone():
-                cursor.execute('UPDATE UsuarioRed SET redSocial = %s WHERE idUsuario = %s',
-                               (redSocial, id))
-            else:
-                cursor.execute('INSERT INTO UsuarioRed (idUsuario, redSocial) VALUES (%s, %s)',
-                               (id, redSocial))
+            if not cursor.fetchone():
+                cursor.execute('INSERT INTO UsuarioRed (idUsuario) VALUES (%s, %s)',
+                               (id))
+
             # Asegurarse que no exista en UsuarioNormal
             cursor.execute('DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
         else:
@@ -353,6 +426,7 @@ def update_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
+
 
 
 
