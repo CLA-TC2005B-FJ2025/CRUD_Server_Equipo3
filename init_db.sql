@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS IntentoIncorrecto;
 DROP TABLE IF EXISTS IntentoCorrecto;
 DROP TABLE IF EXISTS Boleto;
 DROP TABLE IF EXISTS Imagen;
+DROP TABLE IF EXISTS UsuarioNormal;
+DROP TABLE IF EXISTS UsuarioRed;
 DROP TABLE IF EXISTS Usuario;
 DROP TABLE IF EXISTS Casilla;
 DROP TABLE IF EXISTS Evento;
@@ -14,6 +16,21 @@ CREATE TABLE Usuario (
   idUsuario INT IDENTITY(1,1) PRIMARY KEY,
   usuario VARCHAR(50) NOT NULL,
   idEvento INT NOT NULL
+);
+
+-- Tabla derivada: UsuarioNormal
+CREATE TABLE UsuarioNormal (
+  idUsuario INT PRIMARY KEY,
+  correo VARCHAR(100) NOT NULL,
+  contrasena VARCHAR(100) NOT NULL,
+  FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+);
+
+-- Tabla derivada: UsuarioRed
+CREATE TABLE UsuarioRed (
+  idUsuario INT PRIMARY KEY,
+  redSocial VARCHAR(50) NOT NULL, -- Google, Facebook, etc.
+  FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
 );
 
 -- Table 'Boleto'

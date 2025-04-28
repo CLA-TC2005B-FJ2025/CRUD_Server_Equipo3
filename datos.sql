@@ -8,6 +8,23 @@ INSERT INTO Imagen (URL, estado, respuesta, idEvento, idUsuario) VALUES
 INSERT INTO Usuario (usuario, idEvento) VALUES
 ('valeria', 1);
 
+-- Paso 2: Obtener el último id generado
+-- (Si estás usando SQL Server)
+DECLARE @idUsuario INT = SCOPE_IDENTITY();
+
+-- Paso 3: Insertar en UsuarioNormal usando ese id
+INSERT INTO UsuarioNormal (idUsuario, correo, contrasena) 
+VALUES (@idUsuario, 'valeria@email.com', 'claveSegura123');
+
+-- Insertar a Andrés como UsuarioRed
+INSERT INTO Usuario (usuario, idEvento) VALUES ('andres', 2);
+
+DECLARE @idUsuarioRed INT = SCOPE_IDENTITY();
+
+-- Paso 3: Insertar en UsuarioRed
+INSERT INTO UsuarioRed (idUsuario, redSocial, tokenRed) 
+VALUES (@idUsuarioRed, 'Google', 'abc123xyzTOKEN');
+
 INSERT INTO Boleto (tipo, idUsuario) VALUES
 (0, 1);
 
