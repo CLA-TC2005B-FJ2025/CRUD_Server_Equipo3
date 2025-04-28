@@ -14,7 +14,7 @@ DECLARE @idUsuario INT = SCOPE_IDENTITY();
 
 -- Paso 3: Insertar en UsuarioNormal usando ese id
 INSERT INTO UsuarioNormal (idUsuario, correo, contrasena) 
-VALUES (@idUsuario, 'valeria@email.com', 'claveSegura123');
+VALUES (@idUsuario, 'valeria@email.com', '6b3799be4300e44489a08090123f3842e6419da5');
 
 -- Insertar a Andrés como UsuarioRed
 INSERT INTO Usuario (usuario, idEvento) VALUES ('andres', 1);

@@ -1,9 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session, redirect, url_for
 from flask_cors import CORS
 import pymssql
+import hashlib
 
 app = Flask(__name__)
 CORS(app)
+
+app.secret_key = 'your_secret_key'  # Replace with a strong, random secret key
 
 # Database configuration
 server = "localhost"
@@ -16,10 +19,60 @@ password = "YourPassword123!"
 
 
 def get_connection():
-    return pymssql.connect(server=server, port=port, user=username, password=password, database=database)
+    try:
+        conn = pymssql.connect(
+            server=server, port=port, database=database, user=username, password=password)
+        return conn
+    except Exception as e:
+        print(f"Error conectando a BD: {e}")
+        return None
+
+# Metodos para el login
+def verify_password(stored_password_hash, provided_password):
+    hashed_provided_password = hashlib.sha1(
+        provided_password.encode()).hexdigest()
+    return stored_password_hash == hashed_provided_password
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({'error': 'Se requiere usuario y contraseña'}), 400
+
+    conn = get_connection()
+    if conn:
+        try:
+            cursor = conn.cursor(as_dict=True)
+
+            # Buscar usuario y su contraseña usando JOIN
+            cursor.execute('''
+                SELECT u.idUsuario, u.usuario, un.contrasena
+                FROM Usuario u
+                JOIN UsuarioNormal un ON u.idUsuario = un.idUsuario
+                WHERE u.usuario = %s
+            ''', (username,))
+            user = cursor.fetchone()
+
+            if user and verify_password(user['contrasena'], password):
+                session['username'] = username
+                session['idUsuario'] = user['idUsuario']
+                return jsonify({'mensaje': 'Autenticación exitosa', 'idUsuario': user['idUsuario'], 'username': username}), 200
+            else:
+                return jsonify({'error': 'Usuario o contraseña incorrectos'}), 401
+
+        except Exception as e:
+            return jsonify({'error': f'Error en BD {e}'}), 500
+        finally:
+            conn.close()
+    else:
+        return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
+
+
 
 # Metodos para fetch y manejo de errores
-
 
 def fetch_one_usuario(id):
     conn = get_connection()
