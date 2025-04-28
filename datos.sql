@@ -6,7 +6,7 @@ INSERT INTO Imagen (URL, estado, respuesta, idEvento, idUsuario) VALUES
 ('jsfhsrhfkjdhfkjhdkj', 0, 'jshfu', 1, NULL);
 
 INSERT INTO Usuario (usuario, idEvento, contacto) VALUES
-('valeria', 1, 'valeria@email.com');
+('valeria', 1, 'rocioerr7@gmail.com');
 
 -- Paso 2: Obtener el último id generado
 -- (Si estás usando SQL Server)
