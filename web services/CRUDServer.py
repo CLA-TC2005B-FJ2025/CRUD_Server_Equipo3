@@ -1077,7 +1077,7 @@ def enviar_correo(destinatario, asunto, cuerpo):
         plain_text_content=cuerpo
     )
     try:
-        sg = SendGridAPIClient('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')  # Sustituye tu API Key aquí
+        sg = SendGridAPIClient('')  # Sustituye tu API Key aquí
         response = sg.send(message)
         print(f'Correo enviado: {response.status_code}')
     except Exception as e:
