@@ -17,13 +17,13 @@ INSERT INTO UsuarioNormal (idUsuario, correo, contrasena)
 VALUES (@idUsuario, 'valeria@email.com', 'claveSegura123');
 
 -- Insertar a Andrés como UsuarioRed
-INSERT INTO Usuario (usuario, idEvento) VALUES ('andres', 2);
+INSERT INTO Usuario (usuario, idEvento) VALUES ('andres', 1);
 
 DECLARE @idUsuarioRed INT = SCOPE_IDENTITY();
 
 -- Paso 3: Insertar en UsuarioRed
-INSERT INTO UsuarioRed (idUsuario, redSocial, tokenRed) 
-VALUES (@idUsuarioRed, 'Google', 'abc123xyzTOKEN');
+INSERT INTO UsuarioRed (idUsuario, redSocial) 
+VALUES (@idUsuarioRed, 'Google');
 
 INSERT INTO Boleto (tipo, idUsuario) VALUES
 (0, 1);

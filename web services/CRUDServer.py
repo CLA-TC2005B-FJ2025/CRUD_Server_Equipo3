@@ -24,10 +24,28 @@ def get_connection():
 def fetch_one_usuario(id):
     conn = get_connection()
     cursor = conn.cursor(as_dict=True)
-    cursor.execute('SELECT * FROM Usuario WHERE idUsuario = %s', (id,))
+    cursor.execute('''
+        SELECT 
+          u.idUsuario, 
+          u.usuario, 
+          u.idEvento,
+          un.correo,
+          un.contrasena,
+          ur.redSocial,
+          CASE 
+            WHEN un.idUsuario IS NOT NULL THEN 'Normal'
+            WHEN ur.idUsuario IS NOT NULL THEN 'Red'
+            ELSE 'Desconocido'
+          END AS tipoUsuario
+        FROM Usuario u
+        LEFT JOIN UsuarioNormal un ON u.idUsuario = un.idUsuario
+        LEFT JOIN UsuarioRed ur ON u.idUsuario = ur.idUsuario
+        WHERE u.idUsuario = %s
+    ''', (id,))
     data = cursor.fetchone()
     conn.close()
     return data
+
 
 
 def fetch_one_boleto(id):
@@ -114,9 +132,48 @@ def fetch_one_intento_incorrecto(id):
 # Metodos para Usuario
 @app.route('/usuario', methods=['GET'])
 def get_usuarios():
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(as_dict=True)
+        cursor.execute('''
+            SELECT 
+              u.idUsuario, 
+              u.usuario, 
+              u.idEvento,
+              un.correo,
+              un.contrasena,
+              ur.redSocial,
+              CASE 
+                WHEN un.idUsuario IS NOT NULL THEN 'Normal'
+                WHEN ur.idUsuario IS NOT NULL THEN 'Red'
+                ELSE 'Desconocido'
+              END AS tipoUsuario
+            FROM Usuario u
+            LEFT JOIN UsuarioNormal un ON u.idUsuario = un.idUsuario
+            LEFT JOIN UsuarioRed ur ON u.idUsuario = ur.idUsuario
+        ''')
+        data = cursor.fetchall()
+        conn.close()
+        return jsonify(data)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/usuariored', methods=['GET'])
+def get_usuarios_red():
     conn = get_connection()
     cursor = conn.cursor(as_dict=True)
-    cursor.execute('SELECT * FROM Usuario')
+    cursor.execute('SELECT * FROM UsuarioRed')
+    data = cursor.fetchall()
+    conn.close()
+    return jsonify(data)
+
+@app.route('/usuarionormal', methods=['GET'])
+def get_usuarios_normal():
+    conn = get_connection()
+    cursor = conn.cursor(as_dict=True)
+    cursor.execute('SELECT * FROM UsuarioNormal')
     data = cursor.fetchall()
     conn.close()
     return jsonify(data)
@@ -124,11 +181,13 @@ def get_usuarios():
 
 @app.route('/usuario/<int:id>', methods=['GET'])
 def get_one_usuario(id):
-    data = fetch_one_usuario(id)
-    if data:
-        return jsonify(data)
+    usuario = fetch_one_usuario(id)
+    if usuario:
+        return jsonify(usuario)
     else:
-        return jsonify({'mensaje': 'Registro no encontrado'}), 404
+        return jsonify({'mensaje': 'Usuario no encontrado'}), 404
+
+
 
 
 @app.route('/usuario', methods=['POST'])
@@ -136,18 +195,46 @@ def create_usuario():
     data = request.json
     usuario = data['usuario']
     idEvento = data['idEvento']
-    # Check if the event exists using the helper function
+    tipo = data['tipoUsuario']  # 'Normal' o 'Red'
+
+    # Validar evento
     evento = fetch_one_evento(idEvento)
     if not evento:
         return jsonify({'mensaje': 'El evento especificado no existe'}), 400
-    else:
+
+    try:
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(
             'INSERT INTO Usuario (usuario, idEvento) VALUES (%s, %s)', (usuario, idEvento))
         conn.commit()
+
+        # Obtener id generado
+        cursor.execute('SELECT SCOPE_IDENTITY()')
+        idUsuario = cursor.fetchone()[0]
+
+        if tipo == 'Normal':
+            correo = data['correo']
+            contrasena = data['contrasena']
+            cursor.execute('INSERT INTO UsuarioNormal (idUsuario, correo, contrasena) VALUES (%s, %s, %s)',
+                           (idUsuario, correo, contrasena))
+        elif tipo == 'Red':
+            redSocial = data['redSocial']
+            cursor.execute('INSERT INTO UsuarioRed (idUsuario, redSocial) VALUES (%s, %s)',
+                           (idUsuario, redSocial))
+        else:
+            conn.rollback()
+            return jsonify({'mensaje': 'Tipo de usuario inválido'}), 400
+
+        conn.commit()
+        return jsonify({'mensaje': 'Usuario creado', 'idUsuario': idUsuario}), 201
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
         conn.close()
-        return jsonify({'mensaje': 'Usuario creado'}), 201
+
 
 
 @app.route('/usuario/<int:id>', methods=['PUT'])
@@ -155,28 +242,91 @@ def update_usuario(id):
     data = request.json
     usuario = data['usuario']
     idEvento = data['idEvento']
-    # Check if the event exists using the helper function
+    tipo = data['tipoUsuario']
+
+    # Validar si el usuario existe
+    existing = fetch_one_usuario(id)
+    if not existing:
+        return jsonify({'mensaje': 'Usuario no encontrado'}), 404
+
+    # Validar evento
     evento = fetch_one_evento(idEvento)
     if not evento:
         return jsonify({'mensaje': 'El evento especificado no existe'}), 400
-    else:
+
+    try:
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute(
-            'UPDATE Usuario SET usuario = %s, idEvento = %s WHERE idUsuario = %s', (usuario, idEvento, id))
+
+        # Actualizar tabla Usuario
+        cursor.execute('UPDATE Usuario SET usuario = %s, idEvento = %s WHERE idUsuario = %s', (usuario, idEvento, id))
+
+        if tipo == 'Normal':
+            correo = data['correo']
+            contrasena = data['contrasena']
+
+            # Ver si ya existía en UsuarioNormal
+            cursor.execute('SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            if cursor.fetchone():
+                cursor.execute('UPDATE UsuarioNormal SET correo = %s, contrasena = %s WHERE idUsuario = %s',
+                               (correo, contrasena, id))
+            else:
+                cursor.execute('INSERT INTO UsuarioNormal (idUsuario, correo, contrasena) VALUES (%s, %s, %s)',
+                               (id, correo, contrasena))
+            # Asegurarse que no exista en UsuarioRed
+            cursor.execute('DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
+
+        elif tipo == 'Red':
+            redSocial = data['redSocial']
+
+            cursor.execute('SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            if cursor.fetchone():
+                cursor.execute('UPDATE UsuarioRed SET redSocial = %s WHERE idUsuario = %s',
+                               (redSocial, id))
+            else:
+                cursor.execute('INSERT INTO UsuarioRed (idUsuario, redSocial) VALUES (%s, %s)',
+                               (id, redSocial))
+            # Asegurarse que no exista en UsuarioNormal
+            cursor.execute('DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+        else:
+            conn.rollback()
+            return jsonify({'mensaje': 'Tipo de usuario inválido'}), 400
+
         conn.commit()
-        conn.close()
         return jsonify({'mensaje': 'Usuario actualizado'})
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
 
 
 @app.route('/usuario/<int:id>', methods=['DELETE'])
 def delete_usuario(id):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute('DELETE FROM Usuario WHERE idUsuario = %s', (id,))
-    conn.commit()
-    conn.close()
-    return jsonify({'mensaje': 'Usuario eliminado'})
+    existing = fetch_one_usuario(id)
+    if not existing:
+        return jsonify({'mensaje': 'Usuario no encontrado'}), 404
+
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        # Borrar de tablas hijas primero
+        cursor.execute('DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+        cursor.execute('DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
+        cursor.execute('DELETE FROM Usuario WHERE idUsuario = %s', (id,))
+
+        conn.commit()
+        return jsonify({'mensaje': 'Usuario eliminado'})
+
+    except Exception as e:
+        conn.rollback()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
 
 
 # Metodos para Boleto
