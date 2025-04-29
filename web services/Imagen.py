@@ -11,10 +11,13 @@ import pillow_avif  # soporte AVIF
 import io
 import os
 import traceback
+from flask_socketio import SocketIO, emit
+
 
 app = Flask(__name__)
 CORS(app)
 
+socketio = SocketIO(app, cors_allowed_origins="*")
 app.secret_key = 'your_secret_key'  # Replace with a strong, random secret key
 
 # Database configuration
@@ -35,6 +38,12 @@ def get_connection():
         print(f"Error conectando a BD: {e}")
         return None
 
+def notificar_casilla(idCasilla):
+    conn = get_connection()
+    cur  = conn.cursor(as_dict=True)
+    cur.execute("SELECT idCasilla, estado FROM Casilla WHERE idCasilla=%s", (idCasilla,))
+    emit('casilla:update', cur.fetchone(), broadcast=True)
+
 @app.route('/imagen-secreta/<int:idUsuario>', methods=['GET'])
 def get_imagen_secreta(idUsuario):
     try:
@@ -53,27 +62,39 @@ def get_imagen_secreta(idUsuario):
     # Marcar una casilla como 'ocupada'
 @app.route('/casilla/ocupar', methods=['PUT'])
 def ocupar_casilla():
-    data = request.json
+    data      = request.json
     idCasilla = data['idCasilla']
-    idImagen = data['idImagen']
+    idImagen  = data['idImagen']
+    #  (por ahora NO necesitamos idUsuario)
 
     try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        # Solo la ocupamos si todavía está libre
+        conn   = get_connection()
+        cursor = conn.cursor(as_dict=True)
+
+        # 1) Solo ocupar si sigue libre
         cursor.execute('''
             UPDATE Casilla
-            SET estado = 'ocupada'
-            WHERE idCasilla = %s AND idImagen = %s AND estado = 'libre'
+            SET    estado = 'ocupada'
+            WHERE  idCasilla = %s
+              AND  idImagen  = %s
+              AND  estado    = 'libre'
         ''', (idCasilla, idImagen))
         conn.commit()
 
         if cursor.rowcount == 0:
             return jsonify({'error': 'La casilla no estaba libre'}), 400
 
+        # 2) Obtener estado actual y emitir evento
+        cursor.execute('SELECT idCasilla, estado FROM Casilla WHERE idCasilla = %s',
+                       (idCasilla,))
+        casilla = cursor.fetchone()      # {'idCasilla':…, 'estado':'ocupada'}
+        socketio.emit('casilla:update', casilla, broadcast=True)
+
         return jsonify({'mensaje': 'Casilla ocupada'}), 200
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
     finally:
         conn.close()
 
@@ -155,4 +176,4 @@ def obtener_fragmento(x, y):
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=2026)
+    socketio.run(app, host='0.0.0.0', port=2026)
