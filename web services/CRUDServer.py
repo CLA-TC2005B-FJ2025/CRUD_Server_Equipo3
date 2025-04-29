@@ -34,6 +34,20 @@ def count_boletos_usuario(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/preguntaIntentos/<int:id>', methods=['GET'])
+def count_preguntas_intentos(id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(as_dict=True)
+        cursor.execute('SELECT COUNT(*) AS cantidad '
+                       'FROM IntentoIncorrecto WHERE idCasilla = %s', (id,))
+        row = cursor.fetchone()
+        conn.close()
+        return jsonify({'cantidad': row['cantidad']})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 def get_connection():
     try:
         conn = pymssql.connect(
