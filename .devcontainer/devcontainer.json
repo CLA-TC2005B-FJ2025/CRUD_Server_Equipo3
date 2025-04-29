@@ -21,6 +21,5 @@
       ]
     }
   },
-  "postCreateCommand": "pip install pymssql flask flask-cors requests",
-  "postCreateCommand": "pip install sendgrid"
+  "postCreateCommand": "pip install pymssql flask flask-cors requests sendgrid"
 }
