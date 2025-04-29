@@ -24,7 +24,6 @@ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=YourPassword123!' \
 ```sh
 sudo apt update
 sudo apt install mssql-tools unixodbc-dev
-echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
 ```
 ### Usar sqlcmd para inicializar la base de datos con las tablas desde la terminal.
