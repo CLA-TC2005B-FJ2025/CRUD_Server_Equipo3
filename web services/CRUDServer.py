@@ -4035,13 +4035,13 @@ def delete_intento_incorrecto(id):
     return jsonify({'mensaje': 'IntentoIncorrecto eliminado'})
 
 
-@app.route('/boleto/usuario/<int:idUsuario>', methods=['GET'])
-def count_boletos_usuario(idUsuario):
+@app.route('/boletousuario/<int:id>', methods=['GET'])
+def count_boletos_usuario(id):
     try:
         conn = get_connection()
-        cursor = conn.cursor(as_dict=True)
+        cursor = conn.cursor()
         cursor.execute('SELECT COUNT(*) AS cantidad '
-                       'FROM Boleto WHERE idUsuario = %s', (idUsuario,))
+                       'FROM Boleto WHERE idUsuario = %s', (id,))
         row = cursor.fetchone()
         conn.close()
         return jsonify({'cantidad': row['cantidad']})
