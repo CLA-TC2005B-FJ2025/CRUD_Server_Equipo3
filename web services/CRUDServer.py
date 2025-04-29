@@ -21,7 +21,18 @@ username = "sa"
 password = "YourPassword123!"
 
 # Database connection function
-
+@app.route('/boletousuario/<int:id>', methods=['GET'])
+def count_boletos_usuario(id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(as_dict=True)
+        cursor.execute('SELECT COUNT(*) AS cantidad '
+                       'FROM Boleto WHERE idUsuario = %s', (id,))
+        row = cursor.fetchone()
+        conn.close()
+        return jsonify({'cantidad': row['cantidad']})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 def get_connection():
     try:
@@ -4034,19 +4045,6 @@ def delete_intento_incorrecto(id):
     conn.close()
     return jsonify({'mensaje': 'IntentoIncorrecto eliminado'})
 
-
-@app.route('/boletousuario/<int:id>', methods=['GET'])
-def count_boletos_usuario(id):
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute('SELECT COUNT(*) AS cantidad '
-                       'FROM Boleto WHERE idUsuario = %s', (id,))
-        row = cursor.fetchone()
-        conn.close()
-        return jsonify({'cantidad': row['cantidad']})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':
