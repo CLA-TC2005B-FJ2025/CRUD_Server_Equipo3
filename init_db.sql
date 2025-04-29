@@ -43,14 +43,17 @@ CREATE TABLE Boleto (
 
 -- Table 'Casilla'
 --DROP TABLE IF EXISTS Casilla;
+-- Table 'Casilla'
 CREATE TABLE Casilla (
   idCasilla INT NOT NULL,
   idImagen INT NOT NULL,
   coordenadaX INT NOT NULL,
   coordenadaY INT NOT NULL,
   idPregunta INT NOT NULL,
-  PRIMARY KEY (idCasilla, idImagen) -- Clave primaria compuesta
+  estado VARCHAR(20) DEFAULT 'libre' NOT NULL,  -- 👈 Aquí la agregas
+  PRIMARY KEY (idCasilla, idImagen)
 );
+
 
 -- Table 'Pregunta'
 --DROP TABLE IF EXISTS Pregunta;

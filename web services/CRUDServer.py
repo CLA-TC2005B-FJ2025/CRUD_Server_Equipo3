@@ -389,6 +389,9 @@ def create_usuario_normal():
     correo = data['correo']
     contrasena = data['contrasena']
 
+    # Actualizar contraseña
+    hashed_password = hashlib.sha1(contrasena.encode()).hexdigest()
+
     conn = get_connection()
     cursor = conn.cursor(as_dict=True)
 
@@ -417,7 +420,7 @@ def create_usuario_normal():
 
         # Insertar en UsuarioNormal (solo contrasena ahora)
         cursor.execute('INSERT INTO UsuarioNormal (idUsuario, contrasena) VALUES (%s, %s)',
-                       (idUsuario, contrasena))
+                       (idUsuario, hashed_password))
         conn.commit()
 
         return jsonify({'mensaje': 'Usuario normal creado', 'idUsuario': idUsuario}), 201
