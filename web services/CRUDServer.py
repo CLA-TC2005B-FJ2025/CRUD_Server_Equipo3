@@ -31,7 +31,7 @@ def get_connection():
     except Exception as e:
         print(f"Error conectando a BD: {e}")
         return None
-    
+
 
 # Metodos para recuperacion de contrasena
 def enviar_correo(destinatario, asunto, cuerpo):
@@ -42,13 +42,16 @@ def enviar_correo(destinatario, asunto, cuerpo):
         plain_text_content=cuerpo
     )
     try:
-        sg = SendGridAPIClient('')  # Sustituye tu API Key aquí
+        # Sustituye tu API Key aquí
+        sg = SendGridAPIClient(
+            '')
         response = sg.send(message)
         print(f'Correo enviado: {response.status_code}')
     except Exception as e:
         print(f'Error enviando correo: {e}')
 
-#Funciones para recuperar contrasena
+# Funciones para recuperar contrasena
+
 
 @app.route('/recuperar', methods=['POST'])
 def solicitar_recuperacion():
@@ -80,7 +83,8 @@ def solicitar_recuperacion():
         codigos_recuperacion[correo] = codigo
 
         # Enviar correo
-        enviar_correo(correo, 'Recuperación de Contraseña', f'Tu código de recuperación es: {codigo}')
+        enviar_correo(correo, 'Recuperación de Contraseña',
+                      f'Tu código de recuperación es: {codigo}')
 
         return jsonify({'mensaje': 'Correo enviado con el código de recuperación'}), 200
 
@@ -146,6 +150,7 @@ def verify_password(stored_password_hash, provided_password):
         provided_password.encode()).hexdigest()
     return stored_password_hash == hashed_provided_password
 
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -209,7 +214,6 @@ def fetch_one_usuario(id):
     data = cursor.fetchone()
     conn.close()
     return data
-
 
 
 def fetch_one_boleto(id):
@@ -393,7 +397,8 @@ def create_usuario_normal():
         idEvento = evento['idEvento']
 
         # Insertar en Usuario con el correo como contacto
-        cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
+        cursor.execute(
+            'INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
         conn.commit()
 
         cursor.execute('SELECT SCOPE_IDENTITY() as idUsuario')
@@ -411,7 +416,6 @@ def create_usuario_normal():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
 
 
 @app.route('/usuariored', methods=['POST'])
@@ -439,7 +443,8 @@ def create_usuario_red():
         idEvento = evento['idEvento']
 
         # Verificar si el usuario ya existe
-        cursor.execute('SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
+        cursor.execute(
+            'SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
         existing = cursor.fetchone()
 
         if existing:
@@ -447,7 +452,8 @@ def create_usuario_red():
             mensaje = 'Usuario ya existe'
         else:
             # Insertar en Usuario con contacto = nombre de red social
-            cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
+            cursor.execute(
+                'INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
             conn.commit()
 
             cursor.execute('SELECT SCOPE_IDENTITY() AS idUsuario')
@@ -467,8 +473,6 @@ def create_usuario_red():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
 
 
 @app.route('/usuario/<int:id>', methods=['PUT'])
@@ -501,7 +505,8 @@ def update_usuario(id):
                            (usuario, idEvento, correo, id))
 
             # Ver si ya existía en UsuarioNormal
-            cursor.execute('SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
             if cursor.fetchone():
                 cursor.execute('UPDATE UsuarioNormal SET contrasena = %s WHERE idUsuario = %s',
                                (contrasena, id))
@@ -510,7 +515,8 @@ def update_usuario(id):
                                (id, contrasena))
 
             # Asegurarse que no exista en UsuarioRed
-            cursor.execute('DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
 
         elif tipo == 'Red':
             redSocial = data['contacto']
@@ -520,13 +526,15 @@ def update_usuario(id):
                            (usuario, idEvento, redSocial, id))
 
             # Ver si ya existía en UsuarioRed
-            cursor.execute('SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
             if not cursor.fetchone():
                 cursor.execute('INSERT INTO UsuarioRed (idUsuario) VALUES (%s, %s)',
                                (id))
 
             # Asegurarse que no exista en UsuarioNormal
-            cursor.execute('DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
         else:
             conn.rollback()
             return jsonify({'mensaje': 'Tipo de usuario inválido'}), 400
@@ -539,8 +547,6 @@ def update_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
 
 
 @app.route('/usuario/<int:id>', methods=['DELETE'])
@@ -566,7 +572,6 @@ def delete_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
 
 
 # Metodos para Boleto
@@ -1035,13 +1040,6 @@ def delete_intento_incorrecto(id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=2025)
-from flask import Flask, request, jsonify, session, redirect, url_for
-from flask_cors import CORS
-import pymssql
-import hashlib
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-import random
 
 app = Flask(__name__)
 CORS(app)
@@ -1066,7 +1064,7 @@ def get_connection():
     except Exception as e:
         print(f"Error conectando a BD: {e}")
         return None
-    
+
 
 # Metodos para recuperacion de contrasena
 def enviar_correo(destinatario, asunto, cuerpo):
@@ -1077,11 +1075,14 @@ def enviar_correo(destinatario, asunto, cuerpo):
         plain_text_content=cuerpo
     )
     try:
-        sg = SendGridAPIClient('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')  # Sustituye tu API Key aquí
+        # Sustituye tu API Key aquí
+        sg = SendGridAPIClient(
+            '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')
         response = sg.send(message)
         print(f'Correo enviado: {response.status_code}')
     except Exception as e:
         print(f'Error enviando correo: {e}')
+
 
 @app.route('/recuperar', methods=['POST'])
 def solicitar_recuperacion():
@@ -1111,7 +1112,8 @@ def solicitar_recuperacion():
         codigo = random.randint(100000, 999999)
 
         # Enviar correo con el código
-        enviar_correo(correo, 'Recuperación de Contraseña', f'Tu código de recuperación es: {codigo}')
+        enviar_correo(correo, 'Recuperación de Contraseña',
+                      f'Tu código de recuperación es: {codigo}')
 
         # Puedes guardar el código temporalmente en una variable, o en BD para validarlo
         return jsonify({'mensaje': 'Correo enviado con el código de recuperación'}), 200
@@ -1122,10 +1124,13 @@ def solicitar_recuperacion():
         conn.close()
 
 # Metodos para el login
+
+
 def verify_password(stored_password_hash, provided_password):
     hashed_provided_password = hashlib.sha1(
         provided_password.encode()).hexdigest()
     return stored_password_hash == hashed_provided_password
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -1190,7 +1195,6 @@ def fetch_one_usuario(id):
     data = cursor.fetchone()
     conn.close()
     return data
-
 
 
 def fetch_one_boleto(id):
@@ -1374,7 +1378,8 @@ def create_usuario_normal():
         idEvento = evento['idEvento']
 
         # Insertar en Usuario con el correo como contacto
-        cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
+        cursor.execute(
+            'INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
         conn.commit()
 
         cursor.execute('SELECT SCOPE_IDENTITY() as idUsuario')
@@ -1392,7 +1397,6 @@ def create_usuario_normal():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
 
 
 @app.route('/usuariored', methods=['POST'])
@@ -1420,7 +1424,8 @@ def create_usuario_red():
         idEvento = evento['idEvento']
 
         # Verificar si el usuario ya existe
-        cursor.execute('SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
+        cursor.execute(
+            'SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
         existing = cursor.fetchone()
 
         if existing:
@@ -1428,7 +1433,8 @@ def create_usuario_red():
             mensaje = 'Usuario ya existe'
         else:
             # Insertar en Usuario con contacto = nombre de red social
-            cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
+            cursor.execute(
+                'INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
             conn.commit()
 
             cursor.execute('SELECT SCOPE_IDENTITY() AS idUsuario')
@@ -1448,8 +1454,6 @@ def create_usuario_red():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
 
 
 @app.route('/usuario/<int:id>', methods=['PUT'])
@@ -1482,7 +1486,8 @@ def update_usuario(id):
                            (usuario, idEvento, correo, id))
 
             # Ver si ya existía en UsuarioNormal
-            cursor.execute('SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
             if cursor.fetchone():
                 cursor.execute('UPDATE UsuarioNormal SET contrasena = %s WHERE idUsuario = %s',
                                (contrasena, id))
@@ -1491,7 +1496,8 @@ def update_usuario(id):
                                (id, contrasena))
 
             # Asegurarse que no exista en UsuarioRed
-            cursor.execute('DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
 
         elif tipo == 'Red':
             redSocial = data['contacto']
@@ -1501,13 +1507,15 @@ def update_usuario(id):
                            (usuario, idEvento, redSocial, id))
 
             # Ver si ya existía en UsuarioRed
-            cursor.execute('SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
             if not cursor.fetchone():
                 cursor.execute('INSERT INTO UsuarioRed (idUsuario) VALUES (%s, %s)',
                                (id))
 
             # Asegurarse que no exista en UsuarioNormal
-            cursor.execute('DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
         else:
             conn.rollback()
             return jsonify({'mensaje': 'Tipo de usuario inválido'}), 400
@@ -1520,8 +1528,6 @@ def update_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
 
 
 @app.route('/usuario/<int:id>', methods=['DELETE'])
@@ -1547,7 +1553,6 @@ def delete_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
 
 
 # Metodos para Boleto
@@ -2016,13 +2021,6 @@ def delete_intento_incorrecto(id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=2025)
-from flask import Flask, request, jsonify, session, redirect, url_for
-from flask_cors import CORS
-import pymssql
-import hashlib
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-import random
 
 codigos_recuperacion = {}  # {correo: codigo}
 
@@ -2049,7 +2047,7 @@ def get_connection():
     except Exception as e:
         print(f"Error conectando a BD: {e}")
         return None
-    
+
 
 # Metodos para recuperacion de contrasena
 def enviar_correo(destinatario, asunto, cuerpo):
@@ -2060,13 +2058,16 @@ def enviar_correo(destinatario, asunto, cuerpo):
         plain_text_content=cuerpo
     )
     try:
-        sg = SendGridAPIClient('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')  # Sustituye tu API Key aquí
+        # Sustituye tu API Key aquí
+        sg = SendGridAPIClient(
+            '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')
         response = sg.send(message)
         print(f'Correo enviado: {response.status_code}')
     except Exception as e:
         print(f'Error enviando correo: {e}')
 
-#Funciones para recuperar contrasena
+# Funciones para recuperar contrasena
+
 
 @app.route('/recuperar', methods=['POST'])
 def solicitar_recuperacion():
@@ -2098,7 +2099,8 @@ def solicitar_recuperacion():
         codigos_recuperacion[correo] = codigo
 
         # Enviar correo
-        enviar_correo(correo, 'Recuperación de Contraseña', f'Tu código de recuperación es: {codigo}')
+        enviar_correo(correo, 'Recuperación de Contraseña',
+                      f'Tu código de recuperación es: {codigo}')
 
         return jsonify({'mensaje': 'Correo enviado con el código de recuperación'}), 200
 
@@ -2164,6 +2166,7 @@ def verify_password(stored_password_hash, provided_password):
         provided_password.encode()).hexdigest()
     return stored_password_hash == hashed_provided_password
 
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -2227,7 +2230,6 @@ def fetch_one_usuario(id):
     data = cursor.fetchone()
     conn.close()
     return data
-
 
 
 def fetch_one_boleto(id):
@@ -2411,7 +2413,8 @@ def create_usuario_normal():
         idEvento = evento['idEvento']
 
         # Insertar en Usuario con el correo como contacto
-        cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
+        cursor.execute(
+            'INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
         conn.commit()
 
         cursor.execute('SELECT SCOPE_IDENTITY() as idUsuario')
@@ -2429,7 +2432,6 @@ def create_usuario_normal():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
 
 
 @app.route('/usuariored', methods=['POST'])
@@ -2457,7 +2459,8 @@ def create_usuario_red():
         idEvento = evento['idEvento']
 
         # Verificar si el usuario ya existe
-        cursor.execute('SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
+        cursor.execute(
+            'SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
         existing = cursor.fetchone()
 
         if existing:
@@ -2465,7 +2468,8 @@ def create_usuario_red():
             mensaje = 'Usuario ya existe'
         else:
             # Insertar en Usuario con contacto = nombre de red social
-            cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
+            cursor.execute(
+                'INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
             conn.commit()
 
             cursor.execute('SELECT SCOPE_IDENTITY() AS idUsuario')
@@ -2485,8 +2489,6 @@ def create_usuario_red():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
 
 
 @app.route('/usuario/<int:id>', methods=['PUT'])
@@ -2519,7 +2521,8 @@ def update_usuario(id):
                            (usuario, idEvento, correo, id))
 
             # Ver si ya existía en UsuarioNormal
-            cursor.execute('SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
             if cursor.fetchone():
                 cursor.execute('UPDATE UsuarioNormal SET contrasena = %s WHERE idUsuario = %s',
                                (contrasena, id))
@@ -2528,7 +2531,8 @@ def update_usuario(id):
                                (id, contrasena))
 
             # Asegurarse que no exista en UsuarioRed
-            cursor.execute('DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
 
         elif tipo == 'Red':
             redSocial = data['contacto']
@@ -2538,13 +2542,15 @@ def update_usuario(id):
                            (usuario, idEvento, redSocial, id))
 
             # Ver si ya existía en UsuarioRed
-            cursor.execute('SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
             if not cursor.fetchone():
                 cursor.execute('INSERT INTO UsuarioRed (idUsuario) VALUES (%s, %s)',
                                (id))
 
             # Asegurarse que no exista en UsuarioNormal
-            cursor.execute('DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
         else:
             conn.rollback()
             return jsonify({'mensaje': 'Tipo de usuario inválido'}), 400
@@ -2557,8 +2563,6 @@ def update_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
 
 
 @app.route('/usuario/<int:id>', methods=['DELETE'])
@@ -2584,7 +2588,6 @@ def delete_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
 
 
 # Metodos para Boleto
@@ -3053,13 +3056,6 @@ def delete_intento_incorrecto(id):
 
 if __name__ == '__main__':
     app.run(debug=True, port=2025)
-from flask import Flask, request, jsonify, session, redirect, url_for
-from flask_cors import CORS
-import pymssql
-import hashlib
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-import random
 
 app = Flask(__name__)
 CORS(app)
@@ -3084,7 +3080,7 @@ def get_connection():
     except Exception as e:
         print(f"Error conectando a BD: {e}")
         return None
-    
+
 
 # Metodos para recuperacion de contrasena
 def enviar_correo(destinatario, asunto, cuerpo):
@@ -3095,11 +3091,14 @@ def enviar_correo(destinatario, asunto, cuerpo):
         plain_text_content=cuerpo
     )
     try:
-        sg = SendGridAPIClient('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')  # Sustituye tu API Key aquí
+        # Sustituye tu API Key aquí
+        sg = SendGridAPIClient(
+            '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')
         response = sg.send(message)
         print(f'Correo enviado: {response.status_code}')
     except Exception as e:
         print(f'Error enviando correo: {e}')
+
 
 @app.route('/recuperar', methods=['POST'])
 def solicitar_recuperacion():
@@ -3129,7 +3128,8 @@ def solicitar_recuperacion():
         codigo = random.randint(100000, 999999)
 
         # Enviar correo con el código
-        enviar_correo(correo, 'Recuperación de Contraseña', f'Tu código de recuperación es: {codigo}')
+        enviar_correo(correo, 'Recuperación de Contraseña',
+                      f'Tu código de recuperación es: {codigo}')
 
         # Puedes guardar el código temporalmente en una variable, o en BD para validarlo
         return jsonify({'mensaje': 'Correo enviado con el código de recuperación'}), 200
@@ -3140,10 +3140,13 @@ def solicitar_recuperacion():
         conn.close()
 
 # Metodos para el login
+
+
 def verify_password(stored_password_hash, provided_password):
     hashed_provided_password = hashlib.sha1(
         provided_password.encode()).hexdigest()
     return stored_password_hash == hashed_provided_password
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -3208,7 +3211,6 @@ def fetch_one_usuario(id):
     data = cursor.fetchone()
     conn.close()
     return data
-
 
 
 def fetch_one_boleto(id):
@@ -3392,7 +3394,8 @@ def create_usuario_normal():
         idEvento = evento['idEvento']
 
         # Insertar en Usuario con el correo como contacto
-        cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
+        cursor.execute(
+            'INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (usuario, idEvento, correo))
         conn.commit()
 
         cursor.execute('SELECT SCOPE_IDENTITY() as idUsuario')
@@ -3410,7 +3413,6 @@ def create_usuario_normal():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
 
 
 @app.route('/usuariored', methods=['POST'])
@@ -3438,7 +3440,8 @@ def create_usuario_red():
         idEvento = evento['idEvento']
 
         # Verificar si el usuario ya existe
-        cursor.execute('SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
+        cursor.execute(
+            'SELECT idUsuario FROM Usuario WHERE usuario = %s', (nombre,))
         existing = cursor.fetchone()
 
         if existing:
@@ -3446,7 +3449,8 @@ def create_usuario_red():
             mensaje = 'Usuario ya existe'
         else:
             # Insertar en Usuario con contacto = nombre de red social
-            cursor.execute('INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
+            cursor.execute(
+                'INSERT INTO Usuario (usuario, idEvento, contacto) VALUES (%s, %s, %s)', (nombre, idEvento, contacto))
             conn.commit()
 
             cursor.execute('SELECT SCOPE_IDENTITY() AS idUsuario')
@@ -3466,8 +3470,6 @@ def create_usuario_red():
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
 
 
 @app.route('/usuario/<int:id>', methods=['PUT'])
@@ -3500,7 +3502,8 @@ def update_usuario(id):
                            (usuario, idEvento, correo, id))
 
             # Ver si ya existía en UsuarioNormal
-            cursor.execute('SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'SELECT * FROM UsuarioNormal WHERE idUsuario = %s', (id,))
             if cursor.fetchone():
                 cursor.execute('UPDATE UsuarioNormal SET contrasena = %s WHERE idUsuario = %s',
                                (contrasena, id))
@@ -3509,7 +3512,8 @@ def update_usuario(id):
                                (id, contrasena))
 
             # Asegurarse que no exista en UsuarioRed
-            cursor.execute('DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'DELETE FROM UsuarioRed WHERE idUsuario = %s', (id,))
 
         elif tipo == 'Red':
             redSocial = data['contacto']
@@ -3519,13 +3523,15 @@ def update_usuario(id):
                            (usuario, idEvento, redSocial, id))
 
             # Ver si ya existía en UsuarioRed
-            cursor.execute('SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'SELECT * FROM UsuarioRed WHERE idUsuario = %s', (id,))
             if not cursor.fetchone():
                 cursor.execute('INSERT INTO UsuarioRed (idUsuario) VALUES (%s, %s)',
                                (id))
 
             # Asegurarse que no exista en UsuarioNormal
-            cursor.execute('DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
+            cursor.execute(
+                'DELETE FROM UsuarioNormal WHERE idUsuario = %s', (id,))
         else:
             conn.rollback()
             return jsonify({'mensaje': 'Tipo de usuario inválido'}), 400
@@ -3538,8 +3544,6 @@ def update_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
-
 
 
 @app.route('/usuario/<int:id>', methods=['DELETE'])
@@ -3565,7 +3569,6 @@ def delete_usuario(id):
         return jsonify({'error': str(e)}), 500
     finally:
         conn.close()
-
 
 
 # Metodos para Boleto
@@ -4031,7 +4034,8 @@ def delete_intento_incorrecto(id):
     conn.close()
     return jsonify({'mensaje': 'IntentoIncorrecto eliminado'})
 
-@app.route('/boletos/usuario/<int:idUsuario>', methods=['GET'])
+
+@app.route('/boleto/usuario/<int:idUsuario>', methods=['GET'])
 def count_boletos_usuario(idUsuario):
     try:
         conn = get_connection()
