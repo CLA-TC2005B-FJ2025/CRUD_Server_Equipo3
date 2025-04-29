@@ -42,7 +42,7 @@ def enviar_correo(destinatario, asunto, cuerpo):
         plain_text_content=cuerpo
     )
     try:
-        sg = SendGridAPIClient('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')  # Sustituye tu API Key aquí
+        sg = SendGridAPIClient('')  # Sustituye tu API Key aquí
         response = sg.send(message)
         print(f'Correo enviado: {response.status_code}')
     except Exception as e:
@@ -4030,6 +4030,19 @@ def delete_intento_incorrecto(id):
     conn.commit()
     conn.close()
     return jsonify({'mensaje': 'IntentoIncorrecto eliminado'})
+
+@app.route('/boletos/usuario/<int:idUsuario>', methods=['GET'])
+def count_boletos_usuario(idUsuario):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(as_dict=True)
+        cursor.execute('SELECT COUNT(*) AS cantidad '
+                       'FROM Boleto WHERE idUsuario = %s', (idUsuario,))
+        row = cursor.fetchone()
+        conn.close()
+        return jsonify({'cantidad': row['cantidad']})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':
