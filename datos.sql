@@ -25,8 +25,8 @@ DECLARE @idUsuarioRed INT = SCOPE_IDENTITY();
 INSERT INTO UsuarioRed (idUsuario) 
 VALUES (@idUsuarioRed);
 
-INSERT INTO Boleto (tipo, idUsuario) VALUES
-(0, 1);
+/*INSERT INTO Boleto (tipo, idUsuario) VALUES
+(0, 1);*/
 
 INSERT INTO Pregunta (pregunta, opcionA, opcionB, opcionC, opcionD, respuesta) VALUES
 ('¿Quién dirigió la película Titanic (1997)?', 'Steven Spielberg', 'James Cameron', 'Martin Scorsese', 'Ridley Scott', 'opcionB'),
@@ -717,10 +717,8 @@ INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) 
 (1, 1, 0, 0, 1),
 (2, 1, 1, 1, 2),
 (3, 1, 2, 2, 3);
-*/
 INSERT INTO IntentoCorrecto (idUsuario, idCasilla, idImagen) VALUES
 (1, 1, 1);
-
 INSERT INTO IntentoIncorrecto (opcionElegida, idUsuario, idCasilla, idImagen) VALUES
-('opcionB', 1, 1, 1);
+('opcionB', 1, 1, 1);*/
 
