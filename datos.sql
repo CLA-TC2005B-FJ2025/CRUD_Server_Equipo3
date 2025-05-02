@@ -256,462 +256,231 @@ INSERT INTO Pregunta (pregunta, opcionA, opcionB, opcionC, opcionD, respuesta) V
 ('¿Cuál es el número atómico del oxígeno?', '6', '8', '10', '12', 'opcionB');
 
 INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(1, 1, 0, 0, 1);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(2, 1, 1, 0, 2);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(3, 1, 2, 0, 3);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(4, 1, 3, 0, 4);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(5, 1, 4, 0, 5);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(6, 1, 5, 0, 6);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(7, 1, 6, 0, 7);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(8, 1, 7, 0, 8);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(9, 1, 8, 0, 9);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(10, 1, 9, 0, 10);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(11, 1, 10, 0, 11);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(12, 1, 11, 0, 12);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(13, 1, 12, 0, 13);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(14, 1, 13, 0, 14);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(15, 1, 14, 0, 15);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(16, 1, 0, 1, 16);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(17, 1, 1, 1, 17);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(18, 1, 2, 1, 18);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(19, 1, 3, 1, 19);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(20, 1, 4, 1, 20);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(21, 1, 5, 1, 21);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(22, 1, 6, 1, 22);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(23, 1, 7, 1, 23);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(24, 1, 8, 1, 24);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(25, 1, 9, 1, 25);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(26, 1, 10, 1, 26);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(27, 1, 11, 1, 27);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(28, 1, 12, 1, 28);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(29, 1, 13, 1, 29);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(30, 1, 14, 1, 30);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(31, 1, 0, 2, 31);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(32, 1, 1, 2, 32);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(33, 1, 2, 2, 33);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(34, 1, 3, 2, 34);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(35, 1, 4, 2, 35);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(36, 1, 5, 2, 36);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(37, 1, 6, 2, 37);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(38, 1, 7, 2, 38);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(39, 1, 8, 2, 39);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(40, 1, 9, 2, 40);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(41, 1, 10, 2, 41);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(42, 1, 11, 2, 42);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(43, 1, 12, 2, 43);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(44, 1, 13, 2, 44);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(45, 1, 14, 2, 45);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(46, 1, 0, 3, 46);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(47, 1, 1, 3, 47);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(48, 1, 2, 3, 48);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(49, 1, 3, 3, 49);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(50, 1, 4, 3, 50);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(51, 1, 5, 3, 51);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(52, 1, 6, 3, 52);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(53, 1, 7, 3, 53);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(54, 1, 8, 3, 54);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(55, 1, 9, 3, 55);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(56, 1, 10, 3, 56);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(57, 1, 11, 3, 57);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(58, 1, 12, 3, 58);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(59, 1, 13, 3, 59);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(60, 1, 14, 3, 60);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(61, 1, 0, 4, 61);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(62, 1, 1, 4, 62);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(63, 1, 2, 4, 63);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(64, 1, 3, 4, 64);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(65, 1, 4, 4, 65);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(66, 1, 5, 4, 66);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(67, 1, 6, 4, 67);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(68, 1, 7, 4, 68);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(69, 1, 8, 4, 69);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(70, 1, 9, 4, 70);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(71, 1, 10, 4, 71);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(72, 1, 11, 4, 72);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(73, 1, 12, 4, 73);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(74, 1, 13, 4, 74);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(75, 1, 14, 4, 75);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(76, 1, 0, 5, 76);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(77, 1, 1, 5, 77);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(78, 1, 2, 5, 78);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(79, 1, 3, 5, 79);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(80, 1, 4, 5, 80);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(81, 1, 5, 5, 81);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(82, 1, 6, 5, 82);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(83, 1, 7, 5, 83);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(84, 1, 8, 5, 84);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(85, 1, 9, 5, 85);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(86, 1, 10, 5, 86);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(87, 1, 11, 5, 87);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(88, 1, 12, 5, 88);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(89, 1, 13, 5, 89);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(90, 1, 14, 5, 90);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(91, 1, 0, 6, 91);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(92, 1, 1, 6, 92);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(93, 1, 2, 6, 93);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(94, 1, 3, 6, 94);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(95, 1, 4, 6, 95);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(96, 1, 5, 6, 96);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(97, 1, 6, 6, 97);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(98, 1, 7, 6, 98);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(99, 1, 8, 6, 99);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(100, 1, 9, 6, 100);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(101, 1, 10, 6, 101);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(102, 1, 11, 6, 102);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(103, 1, 12, 6, 103);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(104, 1, 13, 6, 104);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(105, 1, 14, 6, 105);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(106, 1, 0, 7, 106);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(107, 1, 1, 7, 107);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(108, 1, 2, 7, 108);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(109, 1, 3, 7, 109);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(110, 1, 4, 7, 110);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(111, 1, 5, 7, 111);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(112, 1, 6, 7, 112);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(113, 1, 7, 7, 113);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(114, 1, 8, 7, 114);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(115, 1, 9, 7, 115);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(116, 1, 10, 7, 116);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(117, 1, 11, 7, 117);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(118, 1, 12, 7, 118);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(119, 1, 13, 7, 119);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(120, 1, 14, 7, 120);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(121, 1, 0, 8, 121);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(122, 1, 1, 8, 122);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(123, 1, 2, 8, 123);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(124, 1, 3, 8, 124);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(125, 1, 4, 8, 125);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(126, 1, 5, 8, 126);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(127, 1, 6, 8, 127);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(128, 1, 7, 8, 128);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(129, 1, 8, 8, 129);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(130, 1, 9, 8, 130);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(131, 1, 10, 8, 131);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(132, 1, 11, 8, 132);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(133, 1, 12, 8, 133);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(134, 1, 13, 8, 134);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(135, 1, 14, 8, 135);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(136, 1, 0, 9, 136);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(137, 1, 1, 9, 137);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(138, 1, 2, 9, 138);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(139, 1, 3, 9, 139);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(140, 1, 4, 9, 140);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(141, 1, 5, 9, 141);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(142, 1, 6, 9, 142);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(143, 1, 7, 9, 143);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(144, 1, 8, 9, 144);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(145, 1, 9, 9, 145);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(146, 1, 10, 9, 146);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(147, 1, 11, 9, 147);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(148, 1, 12, 9, 148);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(149, 1, 13, 9, 149);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(150, 1, 14, 9, 150);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(151, 1, 0, 10, 151);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(152, 1, 1, 10, 152);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(153, 1, 2, 10, 153);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(154, 1, 3, 10, 154);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(155, 1, 4, 10, 155);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(156, 1, 5, 10, 156);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(157, 1, 6, 10, 157);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(158, 1, 7, 10, 158);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(159, 1, 8, 10, 159);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(160, 1, 9, 10, 160);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(161, 1, 10, 10, 161);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(162, 1, 11, 10, 162);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(163, 1, 12, 10, 163);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(164, 1, 13, 10, 164);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(165, 1, 14, 10, 165);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(166, 1, 0, 11, 166);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(167, 1, 1, 11, 167);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(168, 1, 2, 11, 168);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(169, 1, 3, 11, 169);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(170, 1, 4, 11, 170);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(171, 1, 5, 11, 171);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(172, 1, 6, 11, 172);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(173, 1, 7, 11, 173);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(174, 1, 8, 11, 174);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(175, 1, 9, 11, 175);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(176, 1, 10, 11, 176);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(177, 1, 11, 11, 177);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(178, 1, 12, 11, 178);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(179, 1, 13, 11, 179);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(180, 1, 14, 11, 180);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(181, 1, 0, 12, 181);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(182, 1, 1, 12, 182);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(183, 1, 2, 12, 183);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(184, 1, 3, 12, 184);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(185, 1, 4, 12, 185);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(186, 1, 5, 12, 186);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(187, 1, 6, 12, 187);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(188, 1, 7, 12, 188);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(189, 1, 8, 12, 189);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(190, 1, 9, 12, 190);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(191, 1, 10, 12, 191);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(192, 1, 11, 12, 192);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(193, 1, 12, 12, 193);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(194, 1, 13, 12, 194);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(195, 1, 14, 12, 195);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(196, 1, 0, 13, 196);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(197, 1, 1, 13, 197);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(198, 1, 2, 13, 198);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(199, 1, 3, 13, 199);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(200, 1, 4, 13, 200);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(201, 1, 5, 13, 201);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(202, 1, 6, 13, 202);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(203, 1, 7, 13, 203);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(204, 1, 8, 13, 204);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(205, 1, 9, 13, 205);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(206, 1, 10, 13, 206);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(207, 1, 11, 13, 207);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(208, 1, 12, 13, 208);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(209, 1, 13, 13, 209);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(210, 1, 14, 13, 210);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(211, 1, 0, 14, 211);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(212, 1, 1, 14, 212);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(213, 1, 2, 14, 213);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(214, 1, 3, 14, 214);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(215, 1, 4, 14, 215);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(216, 1, 5, 14, 216);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(217, 1, 6, 14, 217);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(218, 1, 7, 14, 218);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(219, 1, 8, 14, 219);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(220, 1, 9, 14, 220);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(221, 1, 10, 14, 221);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(222, 1, 11, 14, 222);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(223, 1, 12, 14, 223);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
-(224, 1, 13, 14, 224);
-INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
+(1, 1, 0, 0, 1),
+(2, 1, 1, 0, 2),
+(3, 1, 2, 0, 3),
+(4, 1, 3, 0, 4),
+(5, 1, 4, 0, 5),
+(6, 1, 5, 0, 6),
+(7, 1, 6, 0, 7),
+(8, 1, 7, 0, 8),
+(9, 1, 8, 0, 9),
+(10, 1, 9, 0, 10),
+(11, 1, 10, 0, 11),
+(12, 1, 11, 0, 12),
+(13, 1, 12, 0, 13),
+(14, 1, 13, 0, 14),
+(15, 1, 14, 0, 15),
+(16, 1, 0, 1, 16),
+(17, 1, 1, 1, 17),
+(18, 1, 2, 1, 18),
+(19, 1, 3, 1, 19),
+(20, 1, 4, 1, 20),
+(21, 1, 5, 1, 21),
+(22, 1, 6, 1, 22),
+(23, 1, 7, 1, 23),
+(24, 1, 8, 1, 24),
+(25, 1, 9, 1, 25),
+(26, 1, 10, 1, 26),
+(27, 1, 11, 1, 27),
+(28, 1, 12, 1, 28),
+(29, 1, 13, 1, 29),
+(30, 1, 14, 1, 30),
+(31, 1, 0, 2, 31),
+(32, 1, 1, 2, 32),
+(33, 1, 2, 2, 33),
+(34, 1, 3, 2, 34),
+(35, 1, 4, 2, 35),
+(36, 1, 5, 2, 36),
+(37, 1, 6, 2, 37),
+(38, 1, 7, 2, 38),
+(39, 1, 8, 2, 39),
+(40, 1, 9, 2, 40),
+(41, 1, 10, 2, 41),
+(42, 1, 11, 2, 42),
+(43, 1, 12, 2, 43),
+(44, 1, 13, 2, 44),
+(45, 1, 14, 2, 45),
+(46, 1, 0, 3, 46),
+(47, 1, 1, 3, 47),
+(48, 1, 2, 3, 48),
+(49, 1, 3, 3, 49),
+(50, 1, 4, 3, 50),
+(51, 1, 5, 3, 51),
+(52, 1, 6, 3, 52),
+(53, 1, 7, 3, 53),
+(54, 1, 8, 3, 54),
+(55, 1, 9, 3, 55),
+(56, 1, 10, 3, 56),
+(57, 1, 11, 3, 57),
+(58, 1, 12, 3, 58),
+(59, 1, 13, 3, 59),
+(60, 1, 14, 3, 60),
+(61, 1, 0, 4, 61),
+(62, 1, 1, 4, 62),
+(63, 1, 2, 4, 63),
+(64, 1, 3, 4, 64),
+(65, 1, 4, 4, 65),
+(66, 1, 5, 4, 66),
+(67, 1, 6, 4, 67),
+(68, 1, 7, 4, 68),
+(69, 1, 8, 4, 69),
+(70, 1, 9, 4, 70),
+(71, 1, 10, 4, 71),
+(72, 1, 11, 4, 72),
+(73, 1, 12, 4, 73),
+(74, 1, 13, 4, 74),
+(75, 1, 14, 4, 75),
+(76, 1, 0, 5, 76),
+(77, 1, 1, 5, 77),
+(78, 1, 2, 5, 78),
+(79, 1, 3, 5, 79),
+(80, 1, 4, 5, 80),
+(81, 1, 5, 5, 81),
+(82, 1, 6, 5, 82),
+(83, 1, 7, 5, 83),
+(84, 1, 8, 5, 84),
+(85, 1, 9, 5, 85),
+(86, 1, 10, 5, 86),
+(87, 1, 11, 5, 87),
+(88, 1, 12, 5, 88),
+(89, 1, 13, 5, 89),
+(90, 1, 14, 5, 90),
+(91, 1, 0, 6, 91),
+(92, 1, 1, 6, 92),
+(93, 1, 2, 6, 93),
+(94, 1, 3, 6, 94),
+(95, 1, 4, 6, 95),
+(96, 1, 5, 6, 96),
+(97, 1, 6, 6, 97),
+(98, 1, 7, 6, 98),
+(99, 1, 8, 6, 99),
+(100, 1, 9, 6, 100),
+(101, 1, 10, 6, 101),
+(102, 1, 11, 6, 102),
+(103, 1, 12, 6, 103),
+(104, 1, 13, 6, 104),
+(105, 1, 14, 6, 105),
+(106, 1, 0, 7, 106),
+(107, 1, 1, 7, 107),
+(108, 1, 2, 7, 108),
+(109, 1, 3, 7, 109),
+(110, 1, 4, 7, 110),
+(111, 1, 5, 7, 111),
+(112, 1, 6, 7, 112),
+(113, 1, 7, 7, 113),
+(114, 1, 8, 7, 114),
+(115, 1, 9, 7, 115),
+(116, 1, 10, 7, 116),
+(117, 1, 11, 7, 117),
+(118, 1, 12, 7, 118),
+(119, 1, 13, 7, 119),
+(120, 1, 14, 7, 120),
+(121, 1, 0, 8, 121),
+(122, 1, 1, 8, 122),
+(123, 1, 2, 8, 123),
+(124, 1, 3, 8, 124),
+(125, 1, 4, 8, 125),
+(126, 1, 5, 8, 126),
+(127, 1, 6, 8, 127),
+(128, 1, 7, 8, 128),
+(129, 1, 8, 8, 129),
+(130, 1, 9, 8, 130),
+(131, 1, 10, 8, 131),
+(132, 1, 11, 8, 132),
+(133, 1, 12, 8, 133),
+(134, 1, 13, 8, 134),
+(135, 1, 14, 8, 135),
+(136, 1, 0, 9, 136),
+(137, 1, 1, 9, 137),
+(138, 1, 2, 9, 138),
+(139, 1, 3, 9, 139),
+(140, 1, 4, 9, 140),
+(141, 1, 5, 9, 141),
+(142, 1, 6, 9, 142),
+(143, 1, 7, 9, 143),
+(144, 1, 8, 9, 144),
+(145, 1, 9, 9, 145),
+(146, 1, 10, 9, 146),
+(147, 1, 11, 9, 147),
+(148, 1, 12, 9, 148),
+(149, 1, 13, 9, 149),
+(150, 1, 14, 9, 150),
+(151, 1, 0, 10, 151),
+(152, 1, 1, 10, 152),
+(153, 1, 2, 10, 153),
+(154, 1, 3, 10, 154),
+(155, 1, 4, 10, 155),
+(156, 1, 5, 10, 156),
+(157, 1, 6, 10, 157),
+(158, 1, 7, 10, 158),
+(159, 1, 8, 10, 159),
+(160, 1, 9, 10, 160),
+(161, 1, 10, 10, 161),
+(162, 1, 11, 10, 162),
+(163, 1, 12, 10, 163),
+(164, 1, 13, 10, 164),
+(165, 1, 14, 10, 165),
+(166, 1, 0, 11, 166),
+(167, 1, 1, 11, 167),
+(168, 1, 2, 11, 168),
+(169, 1, 3, 11, 169),
+(170, 1, 4, 11, 170),
+(171, 1, 5, 11, 171),
+(172, 1, 6, 11, 172),
+(173, 1, 7, 11, 173),
+(174, 1, 8, 11, 174),
+(175, 1, 9, 11, 175),
+(176, 1, 10, 11, 176),
+(177, 1, 11, 11, 177),
+(178, 1, 12, 11, 178),
+(179, 1, 13, 11, 179),
+(180, 1, 14, 11, 180),
+(181, 1, 0, 12, 181),
+(182, 1, 1, 12, 182),
+(183, 1, 2, 12, 183),
+(184, 1, 3, 12, 184),
+(185, 1, 4, 12, 185),
+(186, 1, 5, 12, 186),
+(187, 1, 6, 12, 187),
+(188, 1, 7, 12, 188),
+(189, 1, 8, 12, 189),
+(190, 1, 9, 12, 190),
+(191, 1, 10, 12, 191),
+(192, 1, 11, 12, 192),
+(193, 1, 12, 12, 193),
+(194, 1, 13, 12, 194),
+(195, 1, 14, 12, 195),
+(196, 1, 0, 13, 196),
+(197, 1, 1, 13, 197),
+(198, 1, 2, 13, 198),
+(199, 1, 3, 13, 199),
+(200, 1, 4, 13, 200),
+(201, 1, 5, 13, 201),
+(202, 1, 6, 13, 202),
+(203, 1, 7, 13, 203),
+(204, 1, 8, 13, 204),
+(205, 1, 9, 13, 205),
+(206, 1, 10, 13, 206),
+(207, 1, 11, 13, 207),
+(208, 1, 12, 13, 208),
+(209, 1, 13, 13, 209),
+(210, 1, 14, 13, 210),
+(211, 1, 0, 14, 211),
+(212, 1, 1, 14, 212),
+(213, 1, 2, 14, 213),
+(214, 1, 3, 14, 214),
+(215, 1, 4, 14, 215),
+(216, 1, 5, 14, 216),
+(217, 1, 6, 14, 217),
+(218, 1, 7, 14, 218),
+(219, 1, 8, 14, 219),
+(220, 1, 9, 14, 220),
+(221, 1, 10, 14, 221),
+(222, 1, 11, 14, 222),
+(223, 1, 12, 14, 223),
+(224, 1, 13, 14, 224),
 (225, 1, 14, 14, 225);
-
-
-
-
-
-
-
 
 /*INSERT INTO Casilla (idCasilla, idImagen, coordenadaX, coordenadaY, idPregunta) VALUES
 (1, 1, 0, 0, 1),
