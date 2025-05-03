@@ -1020,4 +1020,4 @@ def delete_intento_incorrecto(id):
     return jsonify({'mensaje': 'IntentoIncorrecto eliminado'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=2025)
