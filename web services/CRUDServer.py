@@ -29,6 +29,66 @@ def get_connection():
     except Exception as e:
         print(f"Error conectando a BD: {e}")
         return None
+    
+
+
+@app.route('/stats/preguntas', methods=['GET'])
+def stats_preguntas():
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(as_dict=True)
+        query = """
+            SELECT 
+                c.idPregunta,
+                p.pregunta,
+                c.estado,
+                COUNT(i.idIncorrecto) AS intentos
+            FROM Casilla c
+            JOIN Pregunta p ON c.idCasilla = p.idPregunta
+            LEFT JOIN IntentoIncorrecto i ON c.idCasilla = i.idCasilla
+            GROUP BY c.idPregunta, p.pregunta, c.estado
+        """
+        cursor.execute(query)
+        resultados = cursor.fetchall()
+        return jsonify(resultados), 200
+    except Exception as e:
+        print("Error en /stats/preguntas:", e)
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+
+@app.route('/stats/usuarios', methods=['GET'])
+def stats_usuarios():
+    conn = get_connection()
+    if not conn:
+        return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
+
+    try:
+        cursor = conn.cursor(as_dict=True)
+        cursor.execute("""
+            SELECT u.idUsuario, u.usuario, u.contacto, 
+                   ISNULL(b.cantidad, 0) AS score
+            FROM Usuario u
+            LEFT JOIN (
+                SELECT idUsuario, COUNT(*) AS cantidad
+                FROM Boleto
+                GROUP BY idUsuario
+            ) b ON u.idUsuario = b.idUsuario
+        """)
+        usuarios = cursor.fetchall()
+        total_usuarios = len(usuarios)
+
+        return jsonify({
+            'usuarios': usuarios,
+            'totalUsuarios': total_usuarios
+        }), 200
+    except Exception as e:
+        print("Error en /stats/preguntas:", e)
+        return jsonify({'error': f'Error en BD: {e}'}), 500
+    finally:
+        conn.close()
+
 
 
 @app.route('/boletousuario/<int:id>', methods=['GET'])
@@ -208,6 +268,26 @@ def login():
             conn.close()
     else:
         return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
+    
+
+@app.route('/loginadmin', methods=['POST'])
+def login_admin():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    print("Usuario recibido:", username)
+    print("Password recibido:", password)
+    print("Hash generado:", hashlib.sha1(password.encode()).hexdigest())
+
+    if username == 'administrador' and hashlib.sha1(password.encode()).hexdigest() == '1e5e5b69b14f1b3ff7d19acfd460d7dd71f6bddb':
+        session['username'] = username
+        session['idUsuario'] = 'admin'
+        return jsonify({'mensaje': 'Autenticación exitosa', 'idUsuario': 'admin', 'username': username}), 200
+    else:
+        return jsonify({'error': 'Usuario o contraseña incorrectos'}), 401
+
+
 
 
 # Metodos para fetch y manejo de errores
