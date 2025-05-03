@@ -69,7 +69,7 @@ def enviar_correo(destinatario, asunto, cuerpo):
     try:
         # Sustituye tu API Key aquí
         sg = SendGridAPIClient(
-            '')
+            'Inserta aquí tu Key de sendgrid')
         response = sg.send(message)
         print(f'Correo enviado: {response.status_code}')
     except Exception as e:
@@ -1018,3 +1018,6 @@ def delete_intento_incorrecto(id):
     conn.commit()
     conn.close()
     return jsonify({'mensaje': 'IntentoIncorrecto eliminado'})
+
+if __name__ == '__main__':
+    app.run(debug=True)

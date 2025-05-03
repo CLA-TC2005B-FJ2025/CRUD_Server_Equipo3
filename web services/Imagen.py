@@ -6,7 +6,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import random
 from flask import send_file, jsonify
-from PIL import Image
+from PIL import Image, ImageFilter
 import pillow_avif  # soporte AVIF
 import io
 import os
@@ -144,7 +144,7 @@ def descubrir_casilla():
     finally:
         conn.close()
 
-ruta_imagen_original = os.path.abspath('./imagenes/Mulaka.avif')
+ruta_imagen_original = os.path.abspath('./imagenes/Mulaka_cuadrada_recorte.jpg')
 
 @app.route('/fragmento/<int:x>/<int:y>', methods=['GET'])
 def obtener_fragmento(x, y):
@@ -163,10 +163,11 @@ def obtener_fragmento(x, y):
             (y + 1) * alto_celda
         )
 
-        fragmento = imagen.crop(box)
+        # Cortar y aplicar blur
+        fragmento = imagen.crop(box).filter(ImageFilter.GaussianBlur(radius=2))
 
         buffer = io.BytesIO()
-        fragmento.save(buffer, format="JPEG")  # puedes devolver JPG aunque el original sea AVIF
+        fragmento.save(buffer, format="JPEG")
         buffer.seek(0)
 
         return send_file(buffer, mimetype='image/jpeg')
@@ -176,4 +177,4 @@ def obtener_fragmento(x, y):
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=2026)
+    app.run(debug=True, port=2025)
