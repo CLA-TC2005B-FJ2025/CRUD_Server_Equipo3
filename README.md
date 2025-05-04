@@ -39,11 +39,6 @@ sqlcmd -S localhost -U sa -P YourPassword123! -i datos.sql
 
 ## Prerequisitos
 
-- Se ejecutó el comando que lee el archivo sql:
-```sh
-sqlcmd -S localhost -U sa -P YourPassword123! -i init_db.sql
-```
-
 ### Ejecución de servidor de servicios web
 
 Ejecuta el siguiente comando en la terminal de tu **GitHub Codespace**:
@@ -54,3 +49,10 @@ python CRUDServer.py
 
 ```
 
+Abre otra terminal y ejecuta el siguiente comando:
+
+```sh
+cd web\ services/
+python Imagen.py
+
+```
