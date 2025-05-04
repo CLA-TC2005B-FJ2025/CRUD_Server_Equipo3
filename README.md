@@ -10,6 +10,7 @@ Antes de comenzar, asegúrate de tener:
 - **Docker** ejecutándose en tu Codespace.
 - **Python 3** instalado.
 - **pymssql** instalado en tu entorno Python.
+- API de SendGrid.
 
 ### Iniciar la instancia de SQL Server en Docker
 
