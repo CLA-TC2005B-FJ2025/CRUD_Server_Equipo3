@@ -37,8 +37,6 @@ sqlcmd -S localhost -U sa -P YourPassword123! -i datos.sql
 ```
 # Probar servicios web
 
-## Prerequisitos
-
 ### Ejecución de servidor de servicios web
 
 Ejecuta el siguiente comando en la terminal de tu **GitHub Codespace**:
